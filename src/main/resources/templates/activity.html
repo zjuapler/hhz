@@ -1,0 +1,107 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common :: head(title='好好住 | 活动')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="activity" type="com.apler.entity.activity.Activity"*/-->
+<!--/*@thymesVar id="photos" type="com.apler.entity.activity.RelativeMultiPhoto"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <main class="l-main">
+            <div class="m-post">
+                <div class="post-title style05">
+                    <span class="categories">活动</span>
+                    <div class="post-data">
+                        <div style="display: inline-block; font-size: 12px; color: #888">
+                            好好住
+                        </div>
+                        <span class="u-view">
+                            <i class="icon icon-eye"></i>
+                            <th:block th:text="${activity.counter.photoCount}">follow</th:block>
+                        </span>
+                    </div>
+                </div>
+                <article class="post-content">
+                    <p class="" th:text="${activity.activityInfo.content}">{{ question_info.content }}</p>
+                </article>
+            </div>
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="photoList"
+                     th:each="photo : ${photos.photoList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item" th:attr="data-last=${photos.lastId}">
+                            <a href="/photo/1234"
+                               th:href="@{/photo/{id}(id=${photo.photoInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${photo.photoInfo.picUrl} + ');'">
+                                    <!--<div class="category"><i class="icon icon-camera"></i> 照片</div>-->
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 class="title-more"
+                                                th:text="${photo.photoInfo.remark}">
+                                                {{ object.photo.photo_info.remark }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${photo.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${photo.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${photo.photoInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${photo.photoInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${photo.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${photo.photoInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${photo.photoInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${photo.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button th:attr="data-action='activity/'+${activity.activityInfo.id},data-paged=2,data-start=${photos.lastId},data-append='home-list'"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

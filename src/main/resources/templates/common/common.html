@@ -1,0 +1,121 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head (title)">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../static/images/favicon.ico" th:href="@{/images/favicon.ico}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="wap-font-scale" content="no">
+    <meta http-equiv="X-UA-Compatible" content="IE=9, IE=8;IE=7, IE=EDGE, chrome=1">
+
+    <title th:text="${title}">好好住</title>
+
+    <link rel='stylesheet' type='text/css'
+          href="//cdn.bootcss.com/simple-line-icons/2.4.1/css/simple-line-icons.min.css?ver=1.1" />
+    <link rel='stylesheet' type='text/css'
+          href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=1.1" />
+    <link rel='stylesheet' type='text/css' href="../static/cosy/nicetheme.css" th:href="@{/cosy/nicetheme.css}"/>
+    <link rel='stylesheet' type='text/css' href="../static/cosy/reset.css" th:href="@{/cosy/reset.css}"/>
+    <link rel='stylesheet' type='text/css' href="../static/cosy/style.css" th:href="@{/cosy/style.css}"/>
+    <link rel='stylesheet' type='text/css' href="../static/css/iconfont.css" th:href="@{/css/iconfont.css}"/>
+    <link rel='stylesheet' type='text/css' href="../static/css/cosy_more.css" th:href="@{/css/cosy_more.css}"/>
+    <style type="text/css">.topic-grid .item .image {height: 350px;}</style>
+    <script type='text/javascript'>
+        var globals = {
+            "ajax_url": "/ajax",
+            "image_popup": "null",
+            "new_comment_position": "asc",
+            "single": "0",
+            "post_style": "0",
+            "home": "1",
+            "page": "0"
+        };
+    </script>
+    <script type='text/javascript' src="../static/cosy/jquery.js" th:src="@{/cosy/jquery.js}"></script>
+    <script type='text/javascript' src="../static/cosy/jquery-migrate.min.js" th:src="@{/cosy/jquery-migrate.min.js}"></script>
+</head>
+<body>
+<section class="nt_search_inner nt_search_inner_up" th:fragment="search">
+    <div class="container">
+        <div class="top_searchform_wrapper">
+            <form method="get" class="searchform" action="/search/photo">
+                <div class="input-group">
+                    <input type="text" name="keyword" id="keyword" placeholder="Search..." class="form-control" required="">
+                    <span class="input-group-btn">
+                        <button class="btn" type="submit">
+                            <i class="icon icon-magnifier"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <div class="search_inner_close">
+                <div class="btn-search-close"><i class="icon icon-close"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+<header class="nt-header navbar mobile-style02 fixed" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://cosy.iwpzt.com" title="Cosy主题演示站">Cosy主题演示站</a>
+            <a class="navbar-brand mobile-navbar-brand hidden-md hidden-lg" href="http://cosy.iwpzt.com"
+               title="Cosy主题演示站">Cosy主题演示站</a>
+        </div>
+
+        <div class="navbar-right">
+            <button class="btn-search"><i class="icon icon-magnifier"></i></button>
+        </div>
+
+        <div class="navbar-collapse hidden-xs hidden-sm">
+            <ul class="navbar-nav">
+                <li class="menu-item">
+                    <a href="/">首页</a>
+                </li>
+                <li class="menu-item">
+                    <a href="/question">话题</a>
+                </li>
+                <li class="menu-item">
+                    <a href="/activity">活动</a>
+                </li>
+                <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
+                    <span class="fa fa-angle-down"></span>
+                    <a href="/my">我的</a>
+                    <ul class="sub-menu">
+                        <li id="menu-item-2749"
+                            class="menu-item menu-item-type-post_type menu-item-object-post menu-item-2749">
+                            <a href="/favorite/photo?tag=全部">收藏的图片</a>
+                        </li>
+                        <li id="menu-item-2750"
+                            class="menu-item menu-item-type-post_type menu-item-object-post menu-item-2750">
+                            <a href="/favorite/house">收藏的整屋</a>
+                        </li>
+                        <li id="menu-item-2751"
+                            class="menu-item menu-item-type-post_type menu-item-object-post menu-item-2751">
+                            <a href="/favorite/article">收藏的文章</a>
+                        </li>
+                        <li id="menu-item-2752"
+                            class="menu-item menu-item-type-post_type menu-item-object-post menu-item-2752">
+                            <a href="/favorite/answer">收藏的回答</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <button type="button" class="navbar-toggle mobile-navbar-toggle" id="mobile-menu-icon">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    </div>
+</header>
+
+<div th:fragment="footerJs">
+    <script type='text/javascript' src="../static/cosy/plugins.min.js" th:src="@{/cosy/plugins.min.js}"></script>
+    <script type='text/javascript' src="../static/cosy/owl.carousel.min.js" th:src="@{/cosy/owl.carousel.min.js}"></script>
+    <script type='text/javascript' src="../static/cosy/nicetheme.js" th:src="@{/cosy/nicetheme.js}"></script>
+    <script type='text/javascript' src="../static/cosy/lazysizes.min.js" th:src="@{/cosy/lazysizes.min.js}"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common :: head(title='好好住 | 搜索结果')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="photos" type="com.apler.entity.photo.MultiPhotoWithType"*/-->
+<!--/*@thymesVar id="keyword" type="String"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <span class="active">照片</span>
+            <span><a th:href="@{/search/house(keyword=${keyword})}">整屋</a></span>
+            <span><a th:href="@{/search/article(keyword=${keyword})}">文章</a></span>
+            <span><a th:href="@{/search/question(keyword=${keyword})}">话题</a></span>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="photoList"
+                     th:each="photo : ${photos.photoWithTypeList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item">
+                            <a href="/photo/1234"
+                               th:href="@{/photo/{id}(id=${photo.photo.photoInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${photo.photo.photoInfo.picUrl} + ');'">
+                                    <div class="category"><i class="icon icon-camera"></i> 照片</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 class="title-more"
+                                                th:text="${photo.photo.photoInfo.remark}">
+                                                {{ object.photo.photo_info.remark }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${photo.photo.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${photo.photo.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${photo.photo.photoInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${photo.photo.photoInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${photo.photo.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${photo.photo.photoInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${photo.photo.photoInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${photo.photo.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button th:attr="data-action='search/photo',data-paged='2',data-append='home-list',data-keyword=${keyword}"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

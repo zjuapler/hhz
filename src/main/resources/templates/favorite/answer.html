@@ -1,0 +1,89 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | 话题')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="answers" type="com.apler.entity.favorite.answer.FavoriteMultiAnswer"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container" style="width:750px;">
+        <main class="l-main">
+            <div class="m-post">
+                <article class="post-content">
+                    <div class="answer-list">
+                        <div class="post-embed-item item"
+                             th:each="answer: ${answers.answerList}"
+                             th:fragment="answerList" th:attr="data-last=${answers.lastId}">
+                            <a th:href="@{/answer/{aid}(aid=${answer.answerInfo.id})}"
+                               target="_blank" >
+                                <div class="content">
+                                    <div class="title">
+                                        <h2 th:text="${answer.questionInfo.title}" style="font-size: 18px;">
+                                            {{ answer.answer_info.content|linebreaksbr }}
+                                        </h2>
+                                    </div>
+                                    <div class="data" style="margin-bottom: 10px;">
+                                        <span class="u-name hidden-xs hidden-sm" style="color: #333">
+                                            <img alt=''
+                                                 th:src="${answer.userInfo.avatar}"
+                                                 th:text="${answer.userInfo.nick}"
+                                                 class='avatar avatar-25 photo' height='25' width='25'/>
+                                        </span>
+                                    </div>
+                                    <div class="title">
+                                        <h2 th:utext="${#strings.replace(answer.answerInfo.content,'&#10;','&lt;br&gt;')}" style="-webkit-line-clamp: 5;font-weight: 500;font-size: 16px;">
+                                            {{ answer.answer_info.content|linebreaksbr }}
+                                        </h2>
+                                    </div>
+
+                                    <div class="data">
+                                        <span class="u-time" th:text="${answer.answerInfo.addTime}">{{ answer.answer_info.addtime|timify }}</span>
+                                        <span class="u-view hidden-xs hidden-sm">
+                                            <i class="iconfont icon-favorites-o"></i>
+                                            <th:block th:text="${answer.counter.favorite}">{{ answer.counter.favorite }}</th:block>
+
+                                        </span>
+                                        <span class="u-comment hidden-xs hidden-sm">
+                                            <i class="iconfont icon-like1"></i>
+                                            <th:block th:text="${answer.counter.like}">{{ answer.counter.like }}</th:block>
+
+                                        </span>
+                                    </div>
+                                </div>
+                                <div th:if="${answer.answerInfo.imgList != null }" class="image" style="margin-top: 30px;">
+                                    <div class="thumb"
+                                         th:attr="style='background-image: url(' + ${answer.answerInfo.imgList[0].picUrl} + ')'">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button class="btn btn-primary dm-ajax-load"
+                        th:attr="data-action='favorite/answer',data-paged=2,data-start=${answers.lastId},data-append='answer-list'">
+                    加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="house" type="com.apler.entity.house.House"*/-->
+<head th:include="common/common :: head(title='好好住 | '+${house.userInfo.nick}+'的整屋')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container" style="width:750px;">
+        <main class="l-main">
+            <div class="m-post">
+                <div class="post-title style05">
+                    <span class="categories">整屋</span>
+                    <div th:if="${house.houseInfo.houseHeadInfo.operationTitle} != null">
+                        <h1 style="display: inline-block">
+                            <img src="../static/images/jingxuan.png" th:src="@{/images/jingxuan.png}" height="40"; width="40" style="margin-right: 10px; margin-bottom: 3px;">
+                            <th:block th:text="${house.houseInfo.houseHeadInfo.operationTitle}">编辑推荐理由</th:block>
+                        </h1>
+                    </div>
+                    <h1 th:if="${house.houseInfo.houseHeadInfo.operationTitle} == null"
+                        th:text="${house.houseInfo.houseHeadInfo.title}">整屋标题</h1>
+
+                    <div class="post-data">
+                        <div class="author-name">
+                            <a href="/user/55555" th:href="@{/user/{uid}(uid=${house.userInfo.uid})}" >
+                                <img alt=''
+                                     src='https://cdn2.jianshu.io/assets/default_avatar/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png'
+                                     th:src="${house.userInfo.avatar}" class='avatar avatar-30 photo' height='30' width='30'/>
+                                <th:block th:text="${house.userInfo.nick}" >nickname</th:block>
+                            </a>
+                        </div>
+                        <span class="u-time" th:text="${house.houseInfo.houseHeadInfo.addTime}">2015-11-23 12:54:23</span>
+                        <span class="u-comment">
+                            <i th:if="${house.houseInfo.isFavorited} == 0" class="iconfont icon-favorites-o"></i>
+                            <i th:if="${house.houseInfo.isFavorited} != 0" class="iconfont icon-favoritesfilling"></i>
+                            <th:block th:text="${house.counter.favorite}">1234</th:block>
+                        </span>
+                        <span class="u-view">
+                            <i class="iconfont icon-bubble"></i>
+                            <th:block th:text="${house.counter.comment}">comment</th:block>
+                        </span>
+                    </div>
+                </div>
+
+                <article class="post-content">
+                    <th:block th:if="${house.houseInfo.houseHeadInfo}">
+                        <div class="post-image" style="position: relative; ">
+                            <img class="article-img"
+                                 src="http://img.hhz1.cn/App-imageShow/o_phbig/1b6/a2be320jg09t00000p8cjm4?iv=1&w=750&h=378.21428571429"
+                                 th:src="${house.houseInfo.houseHeadInfo.coverPicUrl}"
+                            />
+                        </div>
+                        <h3>说在前面</h3>
+                        <p th:text="${house.houseInfo.houseHeadInfo.description}">article_info.head_info.description</p>
+                    </th:block>
+                    <th:block th:each="houseArea : ${house.houseInfo.showPhotoInfo}">
+                        <h3 th:text="${houseArea.name}">{{ houseArea.name }}</h3>
+                        <th:block th:each="housePic : ${houseArea.showPics}">
+                            <div class="post-image" style="position: relative; ">
+                                <img class="article-img"
+                                     src="http://img.hhz1.cn/App-imageShow/o_phbig/e47/a13e221oc2p800000p88zqv?iv=1&w=1080&h=1740.3314917127"
+                                     th:src="${housePic.oriPicUrl}"
+                                />
+                                <a href="/photo/1234"
+                                   th:href="@{/photo/{picId}(picId=${housePic.id})}"
+                                   class="img-link" th:style="'left:'+${housePic.favLabelMarginLeft}+'px'">
+                                    <i class="iconfont icon-favorites-o" th:text="${housePic.counter.favorite}"> {{ pic_info.counter.favorite }} </i>
+                                    <i class="iconfont icon-like1" th:text="${housePic.counter.like}"> {{ pic_info.counter.like }} </i>
+                                    <i class="iconfont icon-bubble" th:text="${housePic.counter.comment}"> {{ pic_info.counter.comment }} </i>
+                                </a>
+                            </div>
+                            <p th:text="${housePic.remark}">{{ pic_info.remark }}</p>
+                        </th:block>
+                    </th:block>
+                </article>
+
+                <div th:replace="common/like :: like(info=${house.houseInfo}, id=${house.id}, objType='house', counter=${house.counter})">LIKE</div>
+            </div>
+
+            <div th:replace="comment/doComment :: doComment">doComment</div>
+            <!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
+            <!--/*@thymesVar id="comments" type="com.apler.entity.comment.MultiComment"*/-->
+            <div th:replace="comment/commentBlock :: topComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: hotComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: comment(multiComment=${comments})"></div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+<script>
+
+</script>
+</body>
+</html>

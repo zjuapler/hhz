@@ -1,0 +1,233 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | 关注')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="following" type="com.apler.entity.following.Following"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <span><a href="/">推荐</a></span>
+            <span class="active">关注</span>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="followingList"
+                     th:each="followingObject : ${following.followingObjectList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item" th:attr="data-last=${following.startId}">
+                            <a th:if="${followingObject.type}==0"
+                                 href="/photo/1234"
+                                 th:href="@{/photo/{id}(id=${followingObject.photo.photoInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${followingObject.photo.photoInfo.picUrl} + ');'">
+                                    <div class="category"><i class="icon icon-camera"></i> 照片</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 class="title-more"
+                                                th:text="${followingObject.photo.photoInfo.remark}">
+                                                {{ object.photo.photo_info.remark }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${followingObject.photo.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${followingObject.photo.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.photo.photoInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${followingObject.photo.photoInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${followingObject.photo.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.photo.photoInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${followingObject.photo.photoInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${followingObject.photo.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${followingObject.type}==1"
+                                 href="/house/1234"
+                                 th:href="@{/house/{id}(id=${followingObject.house.briefHouseInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${followingObject.house.briefHouseInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 整屋</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${followingObject.house.briefHouseInfo.title}">
+                                                {{ followingObject.article.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${followingObject.house.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${followingObject.house.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.house.briefHouseInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${followingObject.house.briefHouseInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${followingObject.house.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.house.briefHouseInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${followingObject.house.briefHouseInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${followingObject.house.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${followingObject.type}==5"
+                                 href="/article/1234"
+                                 th:href="@{/article/{id}(id=${followingObject.article.articleInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${followingObject.article.articleInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 文章</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${followingObject.article.articleInfo.title}">
+                                                {{ followingObject.article.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${followingObject.article.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${followingObject.article.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.article.articleInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${followingObject.article.articleInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${followingObject.article.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.article.articleInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${followingObject.article.articleInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${followingObject.article.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${followingObject.type}==4"
+                                 href="/answer/1234"
+                                 th:href="@{/answer/{id}(id=${followingObject.answer.answerInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     style="background-image: url('images/bg4.jpeg');">
+                                    <div class="category"><i class="icon icon-note"></i> 回答</div>
+                                    <div class="content">
+                                        <div class="question-title">
+                                            <h1 class="title-more" style="font-size: 20px;"
+                                                th:text="${followingObject.answer.questionInfo.title}">
+                                                    {{ object.answer.question_info.title }}
+                                            </h1>
+                                            <p style="overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;display: -webkit-box;-webkit-line-clamp: 5;color: #EEE;padding-bottom:10px;padding-top:40px" th:text="${followingObject.answer.answerInfo.content}">{{ object.answer.answer_info.content }}</p>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${followingObject.answer.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${followingObject.answer.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.answer.answerInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${followingObject.answer.answerInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${followingObject.answer.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${followingObject.answer.answerInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${followingObject.answer.answerInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${followingObject.answer.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button th:attr="data-action='following',data-paged='2',data-append='home-list',data-start=${following.startId}"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

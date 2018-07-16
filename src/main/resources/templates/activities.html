@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common :: head(title='好好住 | 活动')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="activities" type="com.apler.entity.activity.MultiActivity"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="activityList"
+                     th:each="activity : ${activities.activityList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item">
+                            <a href="/activity/1234"
+                               th:href="@{/activity/{id}(id=${activity.activityInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${activity.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 活动</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${activity.activityInfo.title}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${activity.counter.photoCount}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button data-action="activity" data-paged="2" data-append="home-list"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

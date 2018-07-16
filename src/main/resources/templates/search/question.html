@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common :: head(title='好好住 | 搜索结果')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="questions" type="com.apler.entity.search.MultiQuestionWithType"*/-->
+<!--/*@thymesVar id="keyword" type="String"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <span><a th:href="@{/search/photo(keyword=${keyword})}">照片</a></span>
+            <span><a th:href="@{/search/house(keyword=${keyword})}">整屋</a></span>
+            <span><a th:href="@{/search/article(keyword=${keyword})}">文章</a></span>
+            <span class="active">话题</span>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="questionList"
+                     th:each="question : ${questions.questionList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item"
+                             th:attr="style='background: #'+${question.questionInfo.color}">
+                            <a href="/question/1234"
+                               th:href="@{/question/{qid}(qid=${question.questionInfo.id})}"
+                               target="_blank">
+                                <div class="image" >
+                                    <div class="question-head"><i class="icon icon-cup"></i> </div>
+                                    <div class="question-info">
+                                        <div class="question-title">
+                                            <h1 th:text="${question.questionInfo.title}">{{ object.question_info.title }}</h1>
+                                        </div>
+                                        <div class="question-detail">
+                                            <span th:text="${question.questionInfo.content}">{{ object.question_info.content }}</span>
+                                        </div>
+                                        <div class="question-detail" style="padding-top: 20px;">
+                                            <span th:text="${question.counter.joiner}+'人参与讨论'">1234人参与讨论></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button th:attr="data-action='search/question',data-paged='2',data-append='home-list',data-keyword=${keyword}"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

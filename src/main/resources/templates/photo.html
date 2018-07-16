@@ -1,0 +1,80 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | '+${photo.userInfo.nick}+'的图片')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container" style="width:750px;">
+        <main class="l-main">
+            <div class="m-post">
+                <div class="post-title style05">
+                    <span class="categories">照片</span>
+                    <div class="post-data">
+                        <div class="author-name">
+                            <a href="/user/55555" th:href="@{/user/{uid}(uid=${photo.userInfo.uid})}" >
+                                <img alt='' src='https://cdn2.jianshu.io/assets/default_avatar/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png' th:src="${photo.userInfo.avatar}" class='avatar avatar-30 photo' height='30' width='30'/>
+                                <th:block th:text="${photo.userInfo.nick}" >nickname</th:block>
+                            </a>
+                        </div>
+                        <span class="u-time" th:text="${photo.photoInfo.addTime}">2015-11-23 12:54:23</span>
+                        <span class="u-comment">
+                            <i th:if="${photo.photoInfo.isFavorited} == 0" class="iconfont icon-favorites-o"></i>
+                            <i th:if="${photo.photoInfo.isFavorited} != 0" class="iconfont icon-favoritesfilling"></i>
+                            <th:block th:text="${photo.counter.favorite}">1234</th:block>
+                        </span>
+                        <span class="u-view">
+                            <i class="iconfont icon-bubble"></i>
+                            <th:block th:text="${photo.counter.comment}">comment</th:block>
+                        </span>
+                    </div>
+                </div>
+                <article class="post-content">
+                    <div class="post-image" style="position: relative; ">
+                        <img class="article-img" src="http://img.hhz1.cn/App-imageShow/o_phbig/cee/2db9621sw2p800000p88zrm?iv=1&w=1080&h=1618.1506849315"
+                             th:src="${photo.photoInfo.oriPicUrl}"/>
+                        <a th:if="${photo.photoInfo.isJoinArticle} == 1"
+                           href="/house/12344" th:href="@{/house/{hid}(hid=${photo.relativeHouseId})}"
+                           class="img-link" th:style="'left:'+${photo.photoInfo.houseLabelMarginLeft}+'px'">
+                            <i class="icon icon-book-open"></i>
+                            整屋
+                        </a>
+                    </div>
+                    <p class="" th:text="${photo.photoInfo.remark}">remark</p>
+                </article>
+                <th:block th:if="${!photo.photoInfo.remarkTagList.isEmpty()} or ${photo.activity.id} != null">
+                <div class="hr-short"></div>
+                <div class="post-tags tag-link">
+                    <th:block th:if="${photo.activity.id} != null">
+                    <a href='https://m.haohaozhu.com/huodong/{{ activity.activity_id }}.html'>
+                        <span th:text="${photo.activity.title}">#activityTitle</span>
+                    </a>
+                    </th:block>
+                    <th:block th:each="tag : ${photo.photoInfo.remarkTagList}">
+                    <a href="#" th:text="${tag.title}">tagTitle</a>
+                    </th:block>
+                </div>
+                </th:block>
+                <div th:replace="common/like :: like(info=${photo.photoInfo}, id=${photo.photoInfo.id}, objType='photo', counter=${photo.counter})">LIKE</div>
+            </div>
+
+            <div th:replace="comment/doComment :: doComment">doComment</div>
+            <!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
+            <!--/*@thymesVar id="comments" type="com.apler.entity.comment.MultiComment"*/-->
+            <div th:replace="comment/commentBlock :: topComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: hotComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: comment(multiComment=${comments})"></div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

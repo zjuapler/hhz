@@ -1,0 +1,248 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | 推荐')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="recommend" type="com.apler.entity.recommend.Recommend"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <span class="active">推荐</span>
+            <span><a href="/following">关注</a></span>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="recommendList"
+                     th:each="recommendObject : ${recommend.recommendObjectList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item">
+                            <a th:if="${recommendObject.type}==0"
+                                 href="/photo/1234"
+                                 th:href="@{/photo/{id}(id=${recommendObject.recommendPhoto.photoInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${recommendObject.recommendPhoto.photoInfo.picUrl} + ');'">
+                                    <div class="category"><i class="icon icon-camera"></i> 照片</div>
+                                    <div th:if="${recommendObject.recommendReason}"
+                                         th:text="${recommendObject.recommendReason.title}"
+                                         class="recommend">{{ object.recommend_info.title }}</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 class="title-more"
+                                                th:text="${recommendObject.recommendPhoto.photoInfo.remark}">
+                                                {{ object.photo.photo_info.remark }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${recommendObject.recommendPhoto.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${recommendObject.recommendPhoto.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendPhoto.photoInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${recommendObject.recommendPhoto.photoInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${recommendObject.recommendPhoto.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendPhoto.photoInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${recommendObject.recommendPhoto.photoInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${recommendObject.recommendPhoto.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${recommendObject.type}==1"
+                                 href="/house/1234"
+                                 th:href="@{/house/{id}(id=${recommendObject.recommendHouse.briefHouseInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${recommendObject.recommendHouse.briefHouseInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 整屋</div>
+                                    <div th:if="${recommendObject.recommendReason}"
+                                         th:text="${recommendObject.recommendReason.title}"
+                                         class="recommend">{{ object.recommend_info.title }}
+                                    </div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${recommendObject.recommendHouse.briefHouseInfo.title}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${recommendObject.recommendHouse.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${recommendObject.recommendHouse.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendHouse.briefHouseInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${recommendObject.recommendHouse.briefHouseInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${recommendObject.recommendHouse.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendHouse.briefHouseInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${recommendObject.recommendHouse.briefHouseInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${recommendObject.recommendHouse.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${recommendObject.type}==5"
+                                 href="/article/1234"
+                                 th:href="@{/article/{id}(id=${recommendObject.recommendArticle.articleInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${recommendObject.recommendArticle.articleInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 文章</div>
+                                    <div th:if="${recommendObject.recommendReason}"
+                                         th:text="${recommendObject.recommendReason.title}"
+                                         class="recommend">{{ object.recommend_info.title }}
+                                    </div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${recommendObject.recommendArticle.articleInfo.title}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${recommendObject.recommendArticle.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${recommendObject.recommendArticle.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendArticle.articleInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${recommendObject.recommendArticle.articleInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${recommendObject.recommendArticle.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendArticle.articleInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${recommendObject.recommendArticle.articleInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${recommendObject.recommendArticle.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a th:if="${recommendObject.type}==4"
+                                 href="/answer/1234"
+                                 th:href="@{/answer/{id}(id=${recommendObject.recommendAnswer.answerInfo.id})}"
+                                 target="_blank">
+                                <div class="image"
+                                     style="background-image: url('images/bg4.jpeg');">
+                                    <div class="category"><i class="icon icon-note"></i> 回答</div>
+                                    <div th:if="${recommendObject.recommendReason}"
+                                         th:text="${recommendObject.recommendReason.title}"
+                                         class="recommend">{{ object.recommend_info.title }}
+                                    </div>
+                                    <div class="content">
+                                        <div class="question-title">
+                                            <h1 class="title-more" style="font-size: 20px;"
+                                                th:text="${recommendObject.recommendAnswer.questionInfo.title}">
+                                                    {{ object.answer.question_info.title }}
+                                            </h1>
+                                            <p style="overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;display: -webkit-box;-webkit-line-clamp: 5;color: #EEE;padding-bottom:10px;padding-top:40px" th:text="${recommendObject.recommendAnswer.answerInfo.content}">{{ object.answer.answer_info.content }}</p>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${recommendObject.recommendAnswer.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i class="iconfont icon-bubble"></i>
+                                                <th:block th:text="${recommendObject.recommendAnswer.counter.comment}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendAnswer.answerInfo.isFavorited}==1" class="iconfont icon-favorites-icon-favoritesfilling"></i>
+                                                <i th:if="${recommendObject.recommendAnswer.answerInfo.isFavorited}==0" class="iconfont icon-favorites-o"></i>
+                                                <th:block th:text="${recommendObject.recommendAnswer.counter.favorite}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <span>
+                                                <i th:if="${recommendObject.recommendAnswer.answerInfo.isLiked}==1" class="iconfont icon-like"></i>
+                                                <i th:if="${recommendObject.recommendAnswer.answerInfo.isLiked}==0" class="iconfont icon-like1"></i>
+                                                <th:block th:text="${recommendObject.recommendAnswer.counter.like}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button data-action="recommend" data-paged="2" data-append="home-list"
+                        class="btn btn-primary dm-ajax-load">加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

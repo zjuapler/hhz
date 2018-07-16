@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="post-footer clearfix" th:fragment="like (info,id,objType,counter)">
+    <div class="pull-left">
+        <div class="post-action">
+            <a th:if="${info.isFavorited} == 0" class='btn-action' id='favorite'
+               th:attr="data-action='favorite',data-id=${id},data-type=${objType}">
+                <i class="iconfont icon-favorites-o"></i>
+                <span class="count" th:text="${counter.favorite}"> counter.favorite </span>
+            </a>
+            <a th:if="${info.isFavorited} != 0" class='btn-action' id='favorite'
+               th:attr="data-action='cancelFavorite',data-id=${id},data-type=${objType}">
+                <i class="iconfont icon-favoritesfilling"></i>
+                <span class="count" th:text="${counter.favorite}"> counter.favorite </span>
+            </a>
+
+            <a th:if="${info.isLiked} == 0" class="btn-action btn-bigger-cover" id="like"
+               th:attr="data-action='like',data-id=${id},data-type=${objType}">
+                <i class="iconfont icon-like1"></i>
+                <span class="count" th:text="${counter.like}"> counter.like </span>
+            </a>
+            <a th:if="${info.isLiked} != 0" class="btn-action btn-bigger-cover" id="like"
+               th:attr="data-action='cancelLike',data-id=${id},data-type=${objType}">
+                <i class="iconfont icon-like"></i>
+                <span class="count" th:text="${counter.like}"> counter.like </span>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

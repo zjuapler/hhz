@@ -1,0 +1,62 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="article" type="com.apler.entity.article.Article"*/-->
+<head th:include="common/common :: head(title='好好住 | '+${article.userInfo.nick}+'的文章')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container" style="width:750px;">
+        <main class="l-main">
+            <div class="m-post">
+                <div class="post-title style05">
+                    <span class="categories">文章</span>
+                    <h1 th:text="${article.articleInfo.title}">文章标题</h1>
+
+                    <div class="post-data">
+                        <div class="author-name">
+                            <a href="/user/55555" th:href="@{/user/{uid}(uid=${article.userInfo.uid})}" >
+                                <img alt=''
+                                     src='https://cdn2.jianshu.io/assets/default_avatar/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png'
+                                     th:src="${article.userInfo.avatar}" class='avatar avatar-30 photo' height='30' width='30'/>
+                                <th:block th:text="${article.userInfo.nick}" >nickname</th:block>
+                            </a>
+                        </div>
+                        <span class="u-time" th:text="${article.articleInfo.addTime}">2015-11-23 12:54:23</span>
+                        <span class="u-comment">
+                            <i th:if="${article.articleInfo.isFavorited} == 0" class="iconfont icon-favorites-o"></i>
+                            <i th:if="${article.articleInfo.isFavorited} != 0" class="iconfont icon-favoritesfilling"></i>
+                            <th:block th:text="${article.counter.favorite}">1234</th:block>
+                        </span>
+                        <span class="u-view">
+                            <i class="iconfont icon-bubble"></i>
+                            <th:block th:text="${article.counter.comment}">comment</th:block>
+                        </span>
+                    </div>
+                </div>
+
+                <article class="post-content" th:utext="${article.articleInfo.content}">
+                    {{ blank_info.content }}
+                </article>
+
+                <div th:replace="common/like :: like(info=${article.articleInfo}, id=${article.articleInfo.id}, objType='article', counter=${article.counter})">LIKE</div>
+            </div>
+
+            <div th:replace="comment/doComment :: doComment">doComment</div>
+            <!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
+            <!--/*@thymesVar id="comments" type="com.apler.entity.comment.MultiComment"*/-->
+            <div th:replace="comment/commentBlock :: topComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: hotComment(hotComment=${hotComment})"></div>
+            <div th:replace="comment/commentBlock :: comment(multiComment=${comments})"></div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+</body>
+</html>

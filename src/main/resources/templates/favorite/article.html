@@ -1,0 +1,104 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | 收藏的文章')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="articles" type="com.apler.entity.favorite.article.FavoriteMultiArticle"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="favoriteList"
+                     th:each="article : ${articles.articleWithTypeList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item" th:attr="data-last=${articles.lastId}">
+                            <a href="/house/1234"
+                               th:if="${article.type}==5"
+                               th:href="@{/article/{id}(id=${article.article.articleInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${article.article.articleInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 文章</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${article.article.articleInfo.title}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${article.article.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <!--<span class="timestamp"-->
+                                                  <!--th:text="${house.house.houseInfo.houseHeadInfo.addTime}">-->
+                                                <!--{{ object.house.house_info.addtime }}-->
+                                            <!--</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="/guide/1234"
+                               th:if="${article.type}==2"
+                               th:href="@{/guide/{id}(id=${article.guide.guideInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${article.guide.guideInfo.coverPicUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 专题</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 th:text="${article.guide.guideInfo.title}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${article.guide.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <!--<span class="timestamp"-->
+                                            <!--th:text="${house.house.houseInfo.houseHeadInfo.addTime}">-->
+                                            <!--{{ object.house.house_info.addtime }}-->
+                                            <!--</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button class="btn btn-primary dm-ajax-load"
+                        th:attr="data-action='favorite/article',data-paged=2,data-start=${articles.lastId},data-append='home-list'">
+                    加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

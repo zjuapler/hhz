@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
+
+<div th:fragment="topComment(hotComment)" th:if="${hotComment.topComment}" class="m-comments">
+    <h4>置顶评论</h4>
+    <ul class="top-comment-list">
+        <li th:replace="comment/commentUnit :: comment(comment=${hotComment.topComment})">topComment</li>
+    </ul>
+</div>
+
+<div th:fragment="hotComment(hotComment)" th:if="${!hotComment.commentList.empty}" class="m-comments">
+    <h4>热门评论</h4>
+    <ul class="hot-comment-list" th:each="comment : ${hotComment.commentList}">
+        <li th:replace="comment/commentUnit:: comment(comment=${comment})">hotcomment</li>
+    </ul>
+</div>
+
+<!--/*@thymesVar id="multiComment" type="com.apler.entity.comment.MultiComment"*/-->
+<!--/*@thymesVar id="counter" type="com.apler.entity.Counter"*/-->
+
+<div th:fragment="comment(multiComment)" id="comments" class="m-comments">
+    <h4>全部评论</h4>
+    <ul class="comment-list" th:fragment="commentList" th:each="comment : ${multiComment.commentList}">
+        <li th:replace="comment/commentUnit :: comment(comment=${comment})">comment</li>
+    </ul>
+</div>

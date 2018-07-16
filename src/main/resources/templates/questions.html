@@ -1,0 +1,76 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<head th:include="common/common :: head(title='好好住 | 话题')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="tags" type="com.apler.entity.tag.MultiTag"*/-->
+<!--/*@thymesVar id="tag" type="String"*/-->
+<!--/*@thymesVar id="questions" type="com.apler.entity.question.MultiQuestion"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <span th:if="${tag}==null" class="active">全部</span>
+            <span th:unless="${tag}==null"><a th:href="@{/question}">全部</a></span>
+            <th:block th:each="t: ${tags.tagList}">
+                <span th:if="${tag}==${t}" class="active" th:text="${t}">{{ t }}</span>
+                <span th:unless="${tag}==${t}"><a th:href="@{/question(tag=${t})}" th:text="${t}">{{ t }}</a></span>
+            </th:block>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="questionList"
+                     th:each="question : ${questions.questionList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item"
+                             th:attr="style='background: #'+${question.questionInfo.color}">
+                            <a href="/question/1234"
+                               th:href="@{/question/{qid}(qid=${question.questionInfo.id})}"
+                               target="_blank">
+                                <div class="image" style="height: 310px;">
+                                    <div class="question-head"><i class="icon icon-cup"></i> </div>
+                                    <div class="question-info">
+                                        <div class="question-title">
+                                            <h1 th:text="${question.questionInfo.title}">{{ object.question_info.title }}</h1>
+                                        </div>
+                                        <div class="question-detail">
+                                            <span th:text="${question.questionInfo.content}">{{ object.question_info.content }}</span>
+                                        </div>
+                                        <div class="question-detail" style="padding-top: 20px;">
+                                            <span th:text="${question.counter.joiner}+'人参与讨论'">1234人参与讨论></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button class="btn btn-primary dm-ajax-load"
+                        th:attr="data-action='question',data-paged='2',data-append='home-list',data-tag=${tag}"
+                        >加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

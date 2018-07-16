@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="comments" class="m-comments" th:fragment="doComment">
+    <div id="respond" class="comment-respond" >
+        <form method="post" action="http://cosy.iwpzt.com/wp-comments-post.php" id="commentform"
+              class="comment-form">
+            <div class="comment-avatar">
+                <img src='http://cosy.iwpzt.com/wp-content/themes/2018010916203677/timthumb.php?src=http://cosy.iwpzt.com/wp-content/uploads/2017/11/logo-120.jpg&h=50&w=50&zc=1&a=c&q=100&s=1'
+                     class='avatar avatar-50 photo' height='50' width='50'/></div>
+            <div class="comment-author-from">
+                <div class="form-group comment-form-comment">
+                    <div class="comment-textarea">
+                    <textarea id="comment" name="comment" placeholder="" cols="45" rows="8"
+                              maxlength="65525" aria-required="true"
+                              required="required"></textarea>
+                        <div class="text-bar">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-submit row">
+                    <div class="col-form-captcha col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-captcha form-captcha-switch">
+                            <div class="captcha-switch input-switch">
+                                <input type="checkbox" id="switchy" class="input-checkbox"/>
+                                <label for="switchy" class="switch-checkbox"></label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="slidecode" name="slidecode" value="3810383">
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 text-right">
+                        <a rel="nofollow" id="cancel-comment-reply-link" style="display: none"
+                           class="btn btn-default" href="javascript:;">再想想</a>
+
+                        <input disabled="disabled" name="submit" type="submit" id="submit"
+                               class="btn btn-primary" value="发表评论">
+                        <input type='hidden' name='comment_post_ID' value='1849' id='comment_post_ID'/>
+                        <input type='hidden' name='comment_parent' id='comment_parent' value='0'/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

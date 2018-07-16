@@ -1,0 +1,81 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common :: head(title='好好住 | 收藏的图片')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--/*@thymesVar id="photos" type="com.apler.entity.favorite.photo.FavoriteMultiPhoto"*/-->
+<!--/*@thymesVar id="tags" type="com.apler.entity.tag.MultiTag"*/-->
+<!--/*@thymesVar id="tag" type="String"*/-->
+<body class="black-top">
+<section th:replace="common/common :: search"></section>
+<header th:replace="common/common :: header"></header>
+
+<section class="nt-warp nt-warp-full" style="margin-top: 70px;">
+    <div class="container">
+        <div class="filter-menu text-center">
+            <th:block th:each="t: ${tags.tagList}">
+                <span th:if="${tag}==${t}" class="active" th:text="${t}">{{ t }}</span>
+                <span th:unless="${tag}==${t}"><a th:href="@{/favorite/photo(tag=${t})}" th:text="${t}">{{ t }}</a></span>
+            </th:block>
+        </div>
+        <main class="l-main">
+            <div class="m-post-list row home-list">
+                <div class="col-grid col-xs-12 col-sm-4 col-md-4"
+                     th:fragment="favoriteList"
+                     th:each="photo : ${photos.photoList}">
+                    <article class="topic-grid owl-carousel owl-theme" style="margin-bottom: 45px;">
+                        <div class="item" th:attr="data-last=${photos.lastId}">
+                            <a href="/photo/1234"
+                               th:href="@{/photo/{id}(id=${photo.photoInfo.id})}"
+                               target="_blank">
+                                <div class="image"
+                                     th:style="'background-image: url(' + ${photo.photoInfo.picUrl} + ');'">
+                                    <div class="category"><i class="icon icon-book-open"></i> 照片</div>
+                                    <div class="content">
+                                        <div class="title">
+                                            <h2 class="title-more" th:text="${photo.photoInfo.remark}">
+                                                {{ recommendObject.recommendArticle.articleInfo.title }}
+                                            </h2>
+                                        </div>
+                                        <div class="meta">
+                                            <span>
+                                                <i class="icon icon-user"></i>
+                                                <th:block th:text="${photo.userInfo.nick}">
+                                                    {{ object.photo.user_info.nick }}
+                                                </th:block>
+                                            </span>
+                                            <!--<span class="timestamp"-->
+                                                  <!--th:text="${house.house.houseInfo.houseHeadInfo.addTime}">-->
+                                                <!--{{ object.house.house_info.addtime }}-->
+                                            <!--</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="m-ajax-load">
+                <div class="post-loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <button class="btn btn-primary dm-ajax-load"
+                        th:attr="data-action='favorite/photo',data-paged=2,data-start=${photos.lastId},data-append='home-list',data-tag=${tag}">
+                    加载更多
+                </button>
+            </div>
+        </main>
+    </div>
+</section>
+<div th:replace="common/common :: footerJs"></div>
+
+</body>
+</html>

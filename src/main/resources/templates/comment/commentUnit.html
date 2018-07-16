@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="comment" type="com.apler.entity.comment.Comment"*/-->
+
+<li th:fragment="comment(comment)" class="comment">
+    <article class="comment-body">
+        <div class="comment-avatar vcard">
+            <a href = "/user/1234" th:href="@{/user/{uid}(uid=${comment.userInfo.uid})}">
+            <img src="http://img.hhz1.cn/Pic-imageShow/sq_big/000043zz"
+                 th:src="${comment.userInfo.avatar}"
+                 class='avatar avatar-50 photo' height='50' width='50'/>
+            </a>
+        </div>
+        <div class="comment-text">
+            <div class="comment-info">
+                <a href = "/user/1234" th:href="@{/user/{uid}(uid=${comment.userInfo.uid})}">
+                <h6 class="comment-author" th:text="${comment.userInfo.nick}"> nickname </h6>
+                </a>
+            </div>
+
+            <div class="replay_info" th:if="${comment.replayInfo}">
+                <div class="comment-info">
+                    <h6 class="comment-author" th:text="${comment.replayInfo.userInfo.nick}"> nickname </h6>
+                    <time class="replay_time" th:text="${comment.replayInfo.commentInfo.addTime}">replay_time</time>
+                </div>
+                <div class="comment-content">
+                    <p th:text="${comment.replayInfo.commentInfo.content}">replay_content</p>
+                </div>
+            </div>
+
+            <div class="comment-content">
+                <p th:text="${comment.commentInfo.content}">comment.content</p>
+            </div>
+            <div class="comment-meta">
+                <time class="comment-date" th:text="${comment.commentInfo.addTime}">comment_time</time>
+                <a class="like comment-action">
+                    <i th:if="${comment.commentInfo.isLiked} == 0" class="iconfont icon-like1" aria-hidden="true"></i>
+                    <i th:if="${comment.commentInfo.isLiked} != 0" class="iconfont icon-like" aria-hidden="true"></i>
+                    <span class="count" th:text="${comment.commentInfo.likeNum}">{{ comment.comment.like_num }}</span>
+                </a>
+                <a class="comment-reply-link">
+                    <i class='icon icon-action-undo' aria-hidden='true'></i> 回复
+                </a>
+            </div>
+        </div>
+    </article>
+</li>

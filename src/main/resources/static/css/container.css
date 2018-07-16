@@ -1,0 +1,30 @@
+.section{display: block}
+.item-wall{width:100%; border-bottom: 1px solid #f5f5f5;padding-bottom: 5px}
+.clearfloat:after{clear:both;content:".";display:block;width:0;height:0;visibility:hidden}
+.item-container{width:31%;margin:0% 1% 2%;position:relative;float:left;border:1px solid #eee; border-radius:3px;box-shadow:0px 0px 3px #eeeeee;}
+.item-container:before{content:"";display:block;margin-top:92%;visibility:hidden}
+.big-item-container{width:45%;margin:0% 3% 2% 1%;}
+.big-item-container:before{margin-top:75%;}
+.answer-container{width:31%;}
+.answer-container:before{margin-top:60%;}
+.answer-container-more{width:15%;}
+.answer-container-more:before{margin-top:125.2%;}
+.mix-item{position:absolute;top:0;left:0;bottom:0;right:0;color:#fff}
+.mix-item-more{background-color: #f0f0f0}
+.mix-item-pic{width:100%;padding:0px}
+.mix-item-pic img{width: 100%;height:100%;border-top-left-radius:3px;border-top-right-radius:3px;height:110px}
+.mix-item-titles{overflow:hidden;text-overflow:ellipsis;-webkit-box-orient:vertical;}
+.mix-item-titles{margin:12px 0;font-size:15px;padding:0 13px;color:#000;line-height:20px;display:-webkit-box;-webkit-line-clamp:2;font-weight:700}
+.mix-item-infos{font-size:12px;color:#757575;letter-spacing:0;line-height:16px;padding:0 13px}
+.mix-item-infos li{list-style:none;display:inline-block;display:-webkit-box;-webkit-line-clamp:1;}
+.mix-item-infos p{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.mix-answer-titles{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;padding-top: 10px}
+.mix-answer-infos{font-size:14px;color:#757575;letter-spacing:0;line-height:18px;padding:0 13px}
+.mix-answer-infos{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;}
+.more-item-title{margin:0px;font-size:15px;text-align:center;padding: 35% 0 10%}
+.more-item-info{margin:0px;font-size:12px;text-align:center;padding: 0% 0 50%}
+
+.img-container{width:24%;margin:0.45%;}
+.img-container:before{margin-top:100%;}
+.img-container-more{width:20%;}
+.img-container-more:before{margin-top:172.47px;}
