@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.house.House;
 import com.apler.entity.house.HouseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class HouseDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public House getHouse(String houseId){
+    public House getHouse(String houseId, String hhzToken){
 
-        String fullUrl = Constant.GET_HOUSE_INFO;
+        String fullUrl = URL.GET_HOUSE_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

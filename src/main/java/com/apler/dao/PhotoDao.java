@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.house.House;
 import com.apler.entity.photo.Photo;
 import com.apler.entity.photo.PhotoResponse;
@@ -20,12 +20,12 @@ public class PhotoDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Photo getPhoto(String photoId){
+    public Photo getPhoto(String photoId, String hhzToken){
 
-        String fullUrl = Constant.GET_PHOTO_INFO;
+        String fullUrl = URL.GET_PHOTO_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -36,11 +36,11 @@ public class PhotoDao {
         return photoResponse.getPhoto();
     }
 
-    public House getRelativeHouse(String photoId){
-        String fullUrl = Constant.GET_HOUSE_IN_PHOTO;
+    public House getRelativeHouse(String photoId, String hhzToken){
+        String fullUrl = URL.GET_HOUSE_IN_PHOTO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

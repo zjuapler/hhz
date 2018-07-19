@@ -1,6 +1,6 @@
 package com.apler.dao.favorite;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.favorite.photo.FavoriteMultiPhoto;
 import com.apler.entity.favorite.photo.FavoriteMultiPhotoResponse;
 import com.apler.entity.tag.MultiTag;
@@ -18,12 +18,12 @@ public class FavoritePhotoDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public FavoriteMultiPhoto getFavoritePhoto(String tagName, String startId){
+    public FavoriteMultiPhoto getFavoritePhoto(String tagName, String startId, String hhzToken){
 
-        String fullUrl = Constant.GET_FAVORITE_PHOTOS;
+        String fullUrl = URL.GET_FAVORITE_PHOTOS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -36,12 +36,12 @@ public class FavoritePhotoDao {
         return favoriteMultiPhotoResponse.getFavoriteMultiPhoto();
     }
 
-    public MultiTag getFavoritePhotoTag(){
+    public MultiTag getFavoritePhotoTag(String hhzToken){
 
-        String fullUrl = Constant.GET_FAVORITE_PHOTO_TAGS;
+        String fullUrl = URL.GET_FAVORITE_PHOTO_TAGS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

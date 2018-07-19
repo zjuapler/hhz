@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.article.Article;
 import com.apler.entity.article.ArticleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class ArticleDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Article getArticle(String articleId){
+    public Article getArticle(String articleId, String hhzToken){
 
-        String fullUrl = Constant.GET_ARTICLE_INFO;
+        String fullUrl = URL.GET_ARTICLE_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

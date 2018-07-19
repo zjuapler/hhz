@@ -1,8 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
-import com.apler.entity.answer.Answer;
-import com.apler.entity.answer.AnswerResponse;
+import com.apler.config.URL;
 import com.apler.entity.recommend.Recommend;
 import com.apler.entity.recommend.RecommendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,12 @@ public class RecommendDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Recommend getRecommend(String page){
+    public Recommend getRecommend(String page, String hhzToken){
 
-        String fullUrl = Constant.GET_RECOMMEND_OBJECTS;
+        String fullUrl = URL.GET_RECOMMEND_OBJECTS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

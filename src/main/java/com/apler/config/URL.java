@@ -1,8 +1,6 @@
 package com.apler.config;
 
-public class Constant {
-    public final static String TOKEN = "TOKEN";
-    public final static String UID = "UID";
+public class URL {
     public final static String GET_RECOMMEND_USERS = "https://yapi.haohaozhu.com/Recommend/getUser";
     public final static String GET_RECOMMEND_OBJECTS = "https://yapi.haohaozhu.com/Recommend/getList3_2";
     public final static String GET_FOLLOW_OBJECTS = "https://yapi.haohaozhu.com/dynamic/list3_0";

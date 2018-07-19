@@ -1,12 +1,8 @@
 package com.apler.dao.favorite;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.favorite.answer.FavoriteMultiAnswer;
 import com.apler.entity.favorite.answer.FavoriteMultiAnswerResponse;
-import com.apler.entity.favorite.photo.FavoriteMultiPhoto;
-import com.apler.entity.favorite.photo.FavoriteMultiPhotoResponse;
-import com.apler.entity.tag.MultiTag;
-import com.apler.entity.tag.MultiTagResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,16 +16,16 @@ public class FavoriteAnswerDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public FavoriteMultiAnswer getFavoriteAnswer(String startId){
+    public FavoriteMultiAnswer getFavoriteAnswer(String startId, String hhzToken, String uid){
 
-        String fullUrl = Constant.GET_FAVORITE_ANSWERS;
+        String fullUrl = URL.GET_FAVORITE_ANSWERS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("uid", Constant.UID);
+        params.add("uid", uid);
         params.add("obj_type", "4");
         if (startId != null){
             params.add("start_id", startId);

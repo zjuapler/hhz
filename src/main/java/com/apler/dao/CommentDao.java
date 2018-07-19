@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.comment.HotComment;
 import com.apler.entity.comment.HotCommentResponse;
 import com.apler.entity.comment.MultiComment;
@@ -19,16 +19,16 @@ public class CommentDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public MultiComment getMultiComment(String objectId){
-        return getMultiComment(objectId, "0");
+    public MultiComment getMultiComment(String objectId, String hhzToken){
+        return getMultiComment(objectId, "0", hhzToken);
     }
 
-    public MultiComment getMultiComment(String objectId, String startId){
+    public MultiComment getMultiComment(String objectId, String startId, String hhzToken){
 
-        String fullUrl = Constant.GET_COMMENTS;
+        String fullUrl = URL.GET_COMMENTS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -41,12 +41,12 @@ public class CommentDao {
         return multiCommentResponse.getMultiComment();
     }
 
-    public HotComment getHotComment(String objectId){
+    public HotComment getHotComment(String objectId, String hhzToken){
 
-        String fullUrl = Constant.GET_HOT_COMMENTS;
+        String fullUrl = URL.GET_HOT_COMMENTS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

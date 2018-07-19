@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.following.Following;
 import com.apler.entity.following.FollowingResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class FollowingDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Following getFollowing(String startId){
+    public Following getFollowing(String startId, String hhzToken){
 
-        String fullUrl = Constant.GET_FOLLOW_OBJECTS;
+        String fullUrl = URL.GET_FOLLOW_OBJECTS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

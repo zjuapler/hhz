@@ -1,13 +1,9 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
-import com.apler.entity.favorite.photo.FavoriteMultiPhoto;
-import com.apler.entity.favorite.photo.FavoriteMultiPhotoResponse;
+import com.apler.config.URL;
 import com.apler.entity.photo.MultiPhotoWithType;
 import com.apler.entity.photo.MultiPhotoWithTypeResponse;
 import com.apler.entity.search.*;
-import com.apler.entity.tag.MultiTag;
-import com.apler.entity.tag.MultiTagResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,12 +17,12 @@ public class SearchDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public MultiPhotoWithType getSearchPhoto(String keyword, String page){
+    public MultiPhotoWithType getSearchPhoto(String keyword, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_SEARCH_PHOTOS;
+        String fullUrl = URL.GET_SEARCH_PHOTOS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -41,12 +37,12 @@ public class SearchDao {
         return multiPhotoWithTypeResponse.getMultiPhotoWithType();
     }
 
-    public MultiHouseWithType getSearchHouse(String keyword, String page){
+    public MultiHouseWithType getSearchHouse(String keyword, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_SEARCH_HOUSES;
+        String fullUrl = URL.GET_SEARCH_HOUSES;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -62,12 +58,12 @@ public class SearchDao {
         return multiHouseWithTypeResponse.getMultiHouseWithType();
     }
 
-    public MultiArticleWithType getSearchArticle(String keyword, String page){
+    public MultiArticleWithType getSearchArticle(String keyword, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_SEARCH_ARTICLES;
+        String fullUrl = URL.GET_SEARCH_ARTICLES;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -83,12 +79,12 @@ public class SearchDao {
         return multiArticleWithTypeResponse.getMultiArticleWithType();
     }
 
-    public MultiQuestionWithType getSearchQuestion(String keyword, String page){
+    public MultiQuestionWithType getSearchQuestion(String keyword, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_SEARCH_QUESTIONS;
+        String fullUrl = URL.GET_SEARCH_QUESTIONS;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

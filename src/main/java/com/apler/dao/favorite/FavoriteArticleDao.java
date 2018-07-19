@@ -1,10 +1,8 @@
 package com.apler.dao.favorite;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.favorite.article.FavoriteMultiArticle;
 import com.apler.entity.favorite.article.FavoriteMultiArticleResponse;
-import com.apler.entity.favorite.house.FavoriteMultiHouse;
-import com.apler.entity.favorite.house.FavoriteMultiHouseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,17 +16,17 @@ public class FavoriteArticleDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public FavoriteMultiArticle getFavoriteArticle(String startId){
+    public FavoriteMultiArticle getFavoriteArticle(String startId, String hhzToken, String uid){
 
-        String fullUrl = Constant.GET_FAVORITE_ARTICLES;
+        String fullUrl = URL.GET_FAVORITE_ARTICLES;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("type", "5");
-        params.add("uid", Constant.UID);
+        params.add("uid", uid);
         if(startId != null) {
             params.add("start_id", startId);
         }

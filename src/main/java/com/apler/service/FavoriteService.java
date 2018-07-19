@@ -10,8 +10,8 @@ public class FavoriteService {
     @Autowired
     private FavoritePhotoDao favoriteDao;
 
-    public MultiTag getFavoritePhotoTag(){
-        return favoriteDao.getFavoritePhotoTag();
+    public MultiTag getFavoritePhotoTag(String hhzToken){
+        return favoriteDao.getFavoritePhotoTag(hhzToken);
     }
 
 }

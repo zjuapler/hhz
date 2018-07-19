@@ -11,4 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserDao extends CrudRepository<User, Long> {
     @Query(value = "select * from user where phone = ?1", nativeQuery = true)
     User findByPhone(String phone);
+
+    @Query(value = "select * from user where phone = ?1 and password = ?2", nativeQuery = true)
+    User findByPhoneAndPassword(String phone, String password);
 }

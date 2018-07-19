@@ -11,9 +11,9 @@ public class PhotoService {
     @Autowired
     private PhotoDao photoDao;
 
-    public Photo getPhoto(String photoId){
-        Photo photo = photoDao.getPhoto(photoId);
-        House house = photoDao.getRelativeHouse(photoId);
+    public Photo getPhoto(String photoId, String hhzToken){
+        Photo photo = photoDao.getPhoto(photoId, hhzToken);
+        House house = photoDao.getRelativeHouse(photoId, hhzToken);
         if (house != null && house.getId() != null){
             photo.setRelativeHouseId(house.getId());
         }

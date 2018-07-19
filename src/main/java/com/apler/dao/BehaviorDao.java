@@ -1,8 +1,7 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.Response;
-import com.apler.entity.article.ArticleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -32,19 +31,19 @@ public class BehaviorDao {
         objectTypeMap.put("comment", "11");
     }
 
-    public boolean doLike(String objectId, String objectType){
-        return likeAction(objectId, objectType, Constant.DO_LIKE);
+    public boolean doLike(String objectId, String objectType, String hhzToken){
+        return likeAction(objectId, objectType, URL.DO_LIKE, hhzToken);
     }
 
-    public boolean cancelLike(String objectId, String objectType){
-        return likeAction(objectId, objectType, Constant.DO_CANCEL_LIKE);
+    public boolean cancelLike(String objectId, String objectType, String hhzToken){
+        return likeAction(objectId, objectType, URL.DO_CANCEL_LIKE, hhzToken);
     }
 
-    private boolean likeAction(String objectId, String objectType, String fullUrl){
+    private boolean likeAction(String objectId, String objectType, String fullUrl, String hhzToken){
         String realObjectType = objectTypeMap.get(objectType);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -56,19 +55,19 @@ public class BehaviorDao {
         return response.getCode() == 1;
     }
 
-    public boolean doLikeComment(String objectId, String commentId){
-        return likeCommentAction(objectId, commentId, Constant.DO_LIKE);
+    public boolean doLikeComment(String objectId, String commentId, String hhzToken){
+        return likeCommentAction(objectId, commentId, URL.DO_LIKE, hhzToken);
     }
 
-    public boolean cancelLikeComment(String objectId, String commentId){
-        return likeCommentAction(objectId, commentId, Constant.DO_CANCEL_LIKE);
+    public boolean cancelLikeComment(String objectId, String commentId, String hhzToken){
+        return likeCommentAction(objectId, commentId, URL.DO_CANCEL_LIKE, hhzToken);
     }
 
-    private boolean likeCommentAction(String objectId, String commentId, String fullUrl){
+    private boolean likeCommentAction(String objectId, String commentId, String fullUrl, String hhzToken){
         String realObjectType = objectTypeMap.get("comment");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -81,25 +80,25 @@ public class BehaviorDao {
         return response.getCode() == 1;
     }
 
-    public boolean doFavorite(String objectId, String objectType){
+    public boolean doFavorite(String objectId, String objectType, String hhzToken){
         if (objectType.equals("photo")) {
-            return favoritePhotoAction(objectId, Constant.DO_FAVORITE_PHOTO);
+            return favoritePhotoAction(objectId, URL.DO_FAVORITE_PHOTO, hhzToken);
         } else {
-            return favoriteOtherAction(objectId, objectType, Constant.DO_FAVORITE);
+            return favoriteOtherAction(objectId, objectType, URL.DO_FAVORITE, hhzToken);
         }
     }
 
-    public boolean cancelFavorite(String objectId, String objectType){
+    public boolean cancelFavorite(String objectId, String objectType, String hhzToken){
         if (objectType.equals("photo")) {
-            return favoritePhotoAction(objectId, Constant.DO_CANCEL_FAVORITE_PHOTO);
+            return favoritePhotoAction(objectId, URL.DO_CANCEL_FAVORITE_PHOTO, hhzToken);
         } else {
-            return favoriteOtherAction(objectId, objectType, Constant.DO_CANCEL_FAVORITE);
+            return favoriteOtherAction(objectId, objectType, URL.DO_CANCEL_FAVORITE, hhzToken);
         }
     }
 
-    private boolean favoritePhotoAction(String objectId, String fullUrl){
+    private boolean favoritePhotoAction(String objectId, String fullUrl, String hhzToken){
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -110,21 +109,21 @@ public class BehaviorDao {
         return response.getCode() == 1;
     }
 
-    private boolean favoriteOtherAction(String objectId, String objectType, String fullUrl){
-        return likeAction(objectId, objectType, fullUrl);
+    private boolean favoriteOtherAction(String objectId, String objectType, String fullUrl, String hhzToken){
+        return likeAction(objectId, objectType, fullUrl, hhzToken);
     }
 
-    public boolean doFollow(String uid){
-        return followAction(uid, Constant.DO_FOLLOW);
+    public boolean doFollow(String uid, String hhzToken){
+        return followAction(uid, URL.DO_FOLLOW, hhzToken);
     }
 
-    public boolean cancelFollow(String uid){
-        return followAction(uid, Constant.DO_CANCEL_FOLLOW);
+    public boolean cancelFollow(String uid, String hhzToken){
+        return followAction(uid, URL.DO_CANCEL_FOLLOW, hhzToken);
     }
 
-    private boolean followAction(String uid, String fullUrl){
+    private boolean followAction(String uid, String fullUrl, String hhzToken){
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

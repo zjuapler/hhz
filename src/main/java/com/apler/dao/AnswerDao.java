@@ -1,10 +1,8 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.answer.Answer;
 import com.apler.entity.answer.AnswerResponse;
-import com.apler.entity.photo.Photo;
-import com.apler.entity.photo.PhotoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,12 +17,12 @@ public class AnswerDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Answer getAnswer(String answerId){
+    public Answer getAnswer(String answerId, String hhzToken){
 
-        String fullUrl = Constant.GET_ANSWER_INFO;
+        String fullUrl = URL.GET_ANSWER_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

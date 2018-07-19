@@ -15,7 +15,11 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public User getUser(@PathVariable String phone){
+    public User getUser(String phone){
         return userDao.findByPhone(phone);
+    }
+
+    public User getUser(String phone, String password){
+        return userDao.findByPhoneAndPassword(phone, password);
     }
 }

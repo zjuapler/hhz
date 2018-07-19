@@ -1,9 +1,7 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.activity.*;
-import com.apler.entity.house.House;
-import com.apler.entity.house.HouseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +16,12 @@ public class ActivityDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Activity getActivity(String activityId){
+    public Activity getActivity(String activityId, String hhzToken){
 
-        String fullUrl = Constant.GET_ACTIVITY_INFO;
+        String fullUrl = URL.GET_ACTIVITY_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -34,11 +32,11 @@ public class ActivityDao {
         return response.getActivity();
     }
 
-    public RelativeMultiPhoto getPhotoInActivity(String activityId, String startId){
-        String fullUrl = Constant.GET_PHOTO_IN_ACTIVITY;
+    public RelativeMultiPhoto getPhotoInActivity(String activityId, String startId, String hhzToken){
+        String fullUrl = URL.GET_PHOTO_IN_ACTIVITY;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -52,11 +50,11 @@ public class ActivityDao {
         return response.getRelativeMultiPhoto();
     }
 
-    public MultiActivity getActivities(String page){
-        String fullUrl = Constant.GET_ACTIVITIES;
+    public MultiActivity getActivities(String page, String hhzToken){
+        String fullUrl = URL.GET_ACTIVITIES;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();

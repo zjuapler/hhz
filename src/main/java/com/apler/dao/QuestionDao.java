@@ -1,6 +1,6 @@
 package com.apler.dao;
 
-import com.apler.config.Constant;
+import com.apler.config.URL;
 import com.apler.entity.question.*;
 import com.apler.entity.tag.MultiTag;
 import com.apler.entity.tag.MultiTagResponse;
@@ -19,12 +19,12 @@ public class QuestionDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Question getQuestion(String questionId){
+    public Question getQuestion(String questionId, String hhzToken){
 
-        String fullUrl = Constant.GET_QUESTION_INFO;
+        String fullUrl = URL.GET_QUESTION_INFO;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -35,13 +35,13 @@ public class QuestionDao {
         return questionResponse.getQuestion();
     }
 
-    public RelativeMultiAnswer getAnswerInQuestion(String questionId, String page){
+    public RelativeMultiAnswer getAnswerInQuestion(String questionId, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_ANSWER_IN_QUESTION;
+        String fullUrl = URL.GET_ANSWER_IN_QUESTION;
 
         HttpHeaders headers = new HttpHeaders();
 
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -56,13 +56,13 @@ public class QuestionDao {
         return relativeMultiAnswerResponse.getRelativeMultiAnswer();
     }
 
-    public MultiQuestion getQuestions(String tag, String page){
+    public MultiQuestion getQuestions(String tag, String page, String hhzToken){
 
-        String fullUrl = Constant.GET_QUESTIONS;
+        String fullUrl = URL.GET_QUESTIONS;
 
         HttpHeaders headers = new HttpHeaders();
 
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
@@ -77,13 +77,13 @@ public class QuestionDao {
         return multiQuestionResponse.getMultiQuestion();
     }
 
-    public MultiTag getQuestionTags(){
+    public MultiTag getQuestionTags(String hhzToken){
 
-        String fullUrl = Constant.GET_QUESTION_TAGS;
+        String fullUrl = URL.GET_QUESTION_TAGS;
 
         HttpHeaders headers = new HttpHeaders();
 
-        headers.add("Cookie", "hhz_token=" + Constant.TOKEN);
+        headers.add("Cookie", "hhz_token=" + hhzToken);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
