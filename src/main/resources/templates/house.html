@@ -70,9 +70,9 @@
                                 <a href="/photo/1234"
                                    th:href="@{/photo/{picId}(picId=${housePic.id})}"
                                    class="img-link" th:style="'left:'+${housePic.favLabelMarginLeft}+'px'">
-                                    <i class="iconfont icon-favorites-o" th:text="${housePic.counter.favorite}"> {{ pic_info.counter.favorite }} </i>
-                                    <i class="iconfont icon-like1" th:text="${housePic.counter.like}"> {{ pic_info.counter.like }} </i>
-                                    <i class="iconfont icon-bubble" th:text="${housePic.counter.comment}"> {{ pic_info.counter.comment }} </i>
+                                    <i class="iconfont icon-favorites-o" th:text="' '+${housePic.counter.favorite}+' '"> {{ pic_info.counter.favorite }} </i>
+                                    <i class="iconfont icon-like1" th:text="' '+${housePic.counter.like}+' '"> {{ pic_info.counter.like }} </i>
+                                    <i class="iconfont icon-bubble" th:text="' '+${housePic.counter.comment}+' '"> {{ pic_info.counter.comment }} </i>
                                 </a>
                             </div>
                             <p th:text="${housePic.remark}">{{ pic_info.remark }}</p>

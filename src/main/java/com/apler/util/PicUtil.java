@@ -9,7 +9,6 @@ public class PicUtil {
     }
 
     public static int getLabelMarginLeft(String url){
-        log.info("oriPicUrl: " + url);
         String[] splitList = url.split("\\?");
         String queryString = splitList[splitList.length-1];
         splitList = queryString.split("&");
