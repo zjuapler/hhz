@@ -1,65 +1,44 @@
 package com.apler.controller.favorite;
 
-import com.apler.dao.favorite.FavoritePhotoDao;
-import com.apler.entity.favorite.photo.FavoriteMultiPhoto;
-import com.apler.entity.tag.MultiTag;
-import com.apler.util.CookieUtil;
+import com.apler.service.FavoriteService;
+import com.apler.vo.favorite.photo.FavoriteMultiPhoto;
+import com.apler.vo.tag.MultiTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
-
+/**
+ * @author Apler
+ */
 @Controller
 public class FavoritePhotoController {
     @Autowired
-    private FavoritePhotoDao favoriteDao;
+    private FavoriteService favoriteService;
 
     @RequestMapping("/api/favorite/photo")
     @ResponseBody
     public FavoriteMultiPhoto apiFavoritePhoto(
-            HttpServletRequest request,
             @RequestParam(value="tag", defaultValue = "全部") String tagName,
             @RequestParam(value="startId", required = false) String startId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return favoriteDao.getFavoritePhoto(tagName, startId, hhzToken);
+        return favoriteService.getFavoritePhoto(tagName, startId);
     }
 
     @RequestMapping("/api/favorite/photo-tag")
     @ResponseBody
-    public MultiTag apiFavoritePhotoTag(
-            HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return favoriteDao.getFavoritePhotoTag(hhzToken);
+    public MultiTag apiFavoritePhotoTag(){
+        return favoriteService.getFavoritePhotoTag();
     }
 
     @RequestMapping("/favorite/photo")
     public String favoritePhoto(
-            HttpServletRequest request,
             ModelMap map,
             @RequestParam String tag,
             @RequestParam(value="startId", required = false) String startId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        FavoriteMultiPhoto favoriteMultiPhoto = favoriteDao.getFavoritePhoto(tag, startId, hhzToken);
-        MultiTag multiTag = favoriteDao.getFavoritePhotoTag(hhzToken);
+        FavoriteMultiPhoto favoriteMultiPhoto = favoriteService.getFavoritePhoto(tag, startId);
+        MultiTag multiTag = favoriteService.getFavoritePhotoTag();
         map.addAttribute("photos", favoriteMultiPhoto);
         map.addAttribute("tags", multiTag);
         map.addAttribute("tag", tag);
@@ -68,16 +47,10 @@ public class FavoritePhotoController {
 
     @RequestMapping("ajax/favorite/photo")
     public String ajaxFavoritePhoto(
-            HttpServletRequest request,
             ModelMap map,
             @RequestParam String tag,
             @RequestParam(value = "start") String startId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        FavoriteMultiPhoto favoriteMultiPhoto = favoriteDao.getFavoritePhoto(tag, startId, hhzToken);
+        FavoriteMultiPhoto favoriteMultiPhoto = favoriteService.getFavoritePhoto(tag, startId);
         map.addAttribute("photos", favoriteMultiPhoto);
         return "favorite/photo :: favoriteList";
     }

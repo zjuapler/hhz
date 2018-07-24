@@ -3,6 +3,9 @@ package com.apler.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Apler
+ */
 public class TimeUtil {
     public static String timestamp2time(String timestamp){
         Long ts = Long.parseLong(timestamp)*1000;

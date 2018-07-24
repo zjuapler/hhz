@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<!--/*@thymesVar id="comment" type="com.apler.entity.comment.Comment"*/-->
-
 <li th:fragment="comment(comment)" class="comment">
+    <!--/*@thymesVar id="comment" type="com.apler.vo.comment.Comment"*/-->
     <article class="comment-body">
         <div class="comment-avatar vcard">
             <a href = "/user/1234" th:href="@{/user/{uid}(uid=${comment.userInfo.uid})}">

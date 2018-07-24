@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<!--/*@thymesVar id="photo" type="com.apler.vo.photo.Photo"*/-->
 <head th:include="common/common :: head(title='好好住 | '+${photo.userInfo.nick}+'的图片')">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -66,8 +66,8 @@
             </div>
 
             <div th:replace="comment/doComment :: doComment">doComment</div>
-            <!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
-            <!--/*@thymesVar id="comments" type="com.apler.entity.comment.MultiComment"*/-->
+            <!--/*@thymesVar id="hotComment" type="com.apler.vo.comment.HotComment"*/-->
+            <!--/*@thymesVar id="comments" type="com.apler.vo.comment.MultiComment"*/-->
             <div th:replace="comment/commentBlock :: topComment(hotComment=${hotComment})"></div>
             <div th:replace="comment/commentBlock :: hotComment(hotComment=${hotComment})"></div>
             <div th:replace="comment/commentBlock :: comment(multiComment=${comments})"></div>

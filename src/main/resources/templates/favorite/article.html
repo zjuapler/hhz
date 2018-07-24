@@ -2,12 +2,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<!--/*@thymesVar id="photo" type="com.apler.vo.photo.Photo"*/-->
 <head th:include="common/common :: head(title='好好住 | 收藏的文章')">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<!--/*@thymesVar id="articles" type="com.apler.entity.favorite.article.FavoriteMultiArticle"*/-->
+<!--/*@thymesVar id="articles" type="com.apler.vo.favorite.article.FavoriteMultiArticle"*/-->
 <body class="black-top">
 <section th:replace="common/common :: search"></section>
 <header th:replace="common/common :: header"></header>

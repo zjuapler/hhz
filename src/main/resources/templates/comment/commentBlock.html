@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<!--/*@thymesVar id="hotComment" type="com.apler.entity.comment.HotComment"*/-->
+<!--/*@thymesVar id="hotComment" type="com.apler.vo.comment.HotComment"*/-->
 
 <div th:fragment="topComment(hotComment)" th:if="${hotComment.topComment}" class="m-comments">
     <h4>置顶评论</h4>
@@ -20,8 +20,8 @@
     </ul>
 </div>
 
-<!--/*@thymesVar id="multiComment" type="com.apler.entity.comment.MultiComment"*/-->
-<!--/*@thymesVar id="counter" type="com.apler.entity.Counter"*/-->
+<!--/*@thymesVar id="multiComment" type="com.apler.vo.comment.MultiComment"*/-->
+<!--/*@thymesVar id="counter" type="com.apler.vo.Counter"*/-->
 
 <div th:fragment="comment(multiComment)" id="comments" class="m-comments">
     <h4>全部评论</h4>

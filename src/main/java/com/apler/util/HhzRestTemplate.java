@@ -1,15 +1,15 @@
 package com.apler.util;
 
-import org.apache.http.HttpHost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -17,7 +17,23 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
+
+class HhzMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
+    HhzMappingJackson2HttpMessageConverter(){
+        List<MediaType> mediaTypes = new ArrayList<>();
+        /* 加入text/html类型的支持 */
+        mediaTypes.add(MediaType.TEXT_PLAIN);
+        mediaTypes.add(MediaType.TEXT_HTML);
+        setSupportedMediaTypes(mediaTypes);
+    }
+}
+
+/**
+ * @author Apler
+ */
 @Configuration
 @Scope(value = "prototype")
 public class HhzRestTemplate {

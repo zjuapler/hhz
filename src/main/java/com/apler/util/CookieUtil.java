@@ -2,11 +2,15 @@ package com.apler.util;
 
 import javax.servlet.http.Cookie;
 
+/**
+ * @author Apler
+ */
 public class CookieUtil {
     public static String getHhzToken(Cookie[] cookies){
-        String hhzToken=null;
+        String hhzToken = null;
+        String hhzTokenKey = "hhz_token";
         for (Cookie cookie : cookies){
-            if (cookie.getName().equals("hhz_token")){
+            if (hhzTokenKey.equals(cookie.getName())){
                 hhzToken = cookie.getValue();
             }
         }
@@ -15,8 +19,9 @@ public class CookieUtil {
 
     public static String getUid(Cookie[] cookies){
         String uid=null;
+        String uidKey = "uid";
         for (Cookie cookie : cookies){
-            if (cookie.getName().equals("uid")){
+            if (uidKey.equals(cookie.getName())){
                 uid = cookie.getValue();
             }
         }

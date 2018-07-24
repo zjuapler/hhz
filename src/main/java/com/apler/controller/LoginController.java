@@ -1,6 +1,6 @@
 package com.apler.controller;
 
-import com.apler.entity.user.User;
+import com.apler.entity.User;
 import com.apler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author Apler
+ */
 @Controller
 public class LoginController {
     @Autowired
@@ -20,7 +23,7 @@ public class LoginController {
         return "login";
     }
 
-    public void addCookie(HttpServletResponse response, String hhzToken, String uid){
+    private void addCookie(HttpServletResponse response, String hhzToken, String uid){
         Cookie cookie = new Cookie("hhz_token", hhzToken);
         Cookie cookie1 = new Cookie("uid", uid);
         cookie.setPath("/");

@@ -1,57 +1,43 @@
 package com.apler.controller;
 
-import com.apler.dao.CommentDao;
-import com.apler.dao.HouseDao;
-import com.apler.entity.comment.HotComment;
-import com.apler.entity.comment.MultiComment;
-import com.apler.entity.house.House;
-import com.apler.util.CookieUtil;
+import com.apler.service.CommentService;
+import com.apler.service.HouseService;
+import com.apler.vo.comment.HotComment;
+import com.apler.vo.comment.MultiComment;
+import com.apler.vo.house.House;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
+/**
+ * @author Apler
+ */
 @Controller
 public class HouseController {
     @Autowired
-    private HouseDao houseDao;
+    private HouseService houseService;
 
     @Autowired
-    private CommentDao commentDao;
+    private CommentService commentService;
 
     @RequestMapping("/api/house/{houseId}")
     @ResponseBody
     public House apiHouse(
-            HttpServletRequest request,
             @PathVariable String houseId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return houseDao.getHouse(houseId, hhzToken);
+        return houseService.getHouse(houseId);
     }
 
     @RequestMapping("/house/{houseId}")
     public String house(
-            HttpServletRequest request,
             ModelMap map,
             @PathVariable String houseId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        House house = houseDao.getHouse(houseId, hhzToken);
+        House house = houseService.getHouse(houseId);
         map.addAttribute("house", house);
-        MultiComment comments = commentDao.getMultiComment(houseId, hhzToken);
-        HotComment hotComment = commentDao.getHotComment(houseId, hhzToken);
+        MultiComment comments = commentService.getMultiComment(houseId);
+        HotComment hotComment = commentService.getHotComment(houseId);
         map.addAttribute("comments", comments);
         map.addAttribute("hotComment", hotComment);
         return "house";

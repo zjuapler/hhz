@@ -2,14 +2,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="photo" type="com.apler.entity.photo.Photo"*/-->
+<!--/*@thymesVar id="photo" type="com.apler.vo.photo.Photo"*/-->
 <head th:include="common/common :: head(title='好好住 | 话题')">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<!--/*@thymesVar id="tags" type="com.apler.entity.tag.MultiTag"*/-->
+<!--/*@thymesVar id="tags" type="com.apler.vo.tag.MultiTag"*/-->
 <!--/*@thymesVar id="tag" type="String"*/-->
-<!--/*@thymesVar id="questions" type="com.apler.entity.question.MultiQuestion"*/-->
+<!--/*@thymesVar id="questions" type="com.apler.vo.question.MultiQuestion"*/-->
 <body class="black-top">
 <section th:replace="common/common :: search"></section>
 <header th:replace="common/common :: header"></header>

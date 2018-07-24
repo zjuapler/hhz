@@ -1,13 +1,10 @@
 package com.apler.controller;
 
-import com.apler.dao.AnswerDao;
-import com.apler.dao.QuestionDao;
-import com.apler.entity.answer.Answer;
-import com.apler.entity.question.MultiQuestion;
-import com.apler.entity.question.Question;
-import com.apler.entity.question.RelativeMultiAnswer;
-import com.apler.entity.tag.MultiTag;
-import com.apler.util.CookieUtil;
+import com.apler.service.QuestionService;
+import com.apler.vo.question.MultiQuestion;
+import com.apler.vo.question.Question;
+import com.apler.vo.question.RelativeMultiAnswer;
+import com.apler.vo.tag.MultiTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,79 +13,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
-
+/**
+ * @author Apler
+ */
 @Controller
 public class QuestionController {
     @Autowired
-    private QuestionDao questionDao;
+    private QuestionService questionService;
 
     @RequestMapping("/api/question/{questionId}")
     @ResponseBody
     public Question apiQuestion(
-            HttpServletRequest request,
             @PathVariable String questionId){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return questionDao.getQuestion(questionId, hhzToken);
+        return questionService.getQuestion(questionId);
     }
 
     @RequestMapping("/api/question/{questionId}/answer")
     @ResponseBody
     public RelativeMultiAnswer apiRelativeMultiAnswer(
-            HttpServletRequest request,
             @PathVariable String questionId,
             @RequestParam(defaultValue = "1") String page){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return questionDao.getAnswerInQuestion(questionId, page, hhzToken);
+        return questionService.getAnswerInQuestion(questionId, page);
     }
 
     @RequestMapping("/api/question")
     @ResponseBody
     public MultiQuestion apiQuestions(
-            HttpServletRequest request,
             @RequestParam(defaultValue = "1") String page,
             @RequestParam(required = false) String tag){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return questionDao.getQuestions(tag, page, hhzToken);
+        return questionService.getQuestions(tag, page);
     }
 
     @RequestMapping("/api/question_tag")
     @ResponseBody
-    public MultiTag apiQuestionTags(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        return questionDao.getQuestionTags(hhzToken);
+    public MultiTag apiQuestionTags(){
+        return questionService.getQuestionTags();
     }
 
     @RequestMapping("/question")
     public String getQuestions(
-            HttpServletRequest request,
             ModelMap map,
             @RequestParam(required = false) String tag){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        MultiQuestion multiQuestion = questionDao.getQuestions(tag, "1", hhzToken);
-        MultiTag multiTag = questionDao.getQuestionTags(hhzToken);
+        MultiQuestion multiQuestion = questionService.getQuestions(tag, "1");
+        MultiTag multiTag = questionService.getQuestionTags();
         map.addAttribute("questions", multiQuestion);
         map.addAttribute("tags", multiTag);
         map.addAttribute("tag", tag);
@@ -97,32 +64,20 @@ public class QuestionController {
 
     @RequestMapping("/ajax/question")
     public String ajaxGetQuestions(
-            HttpServletRequest request,
             ModelMap map,
             @RequestParam(value = "paged") String page,
             @RequestParam(value = "tag", required = false) String tag){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        MultiQuestion multiQuestion = questionDao.getQuestions(tag, page, hhzToken);
+        MultiQuestion multiQuestion = questionService.getQuestions(tag, page);
         map.addAttribute("questions", multiQuestion);
         return "questions :: questionList";
     }
 
     @RequestMapping("/question/{qid}")
     public String getQuestion(
-            HttpServletRequest request,
             ModelMap map,
             @PathVariable String qid){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        Question question = questionDao.getQuestion(qid, hhzToken);
-        RelativeMultiAnswer relativeMultiAnswer = questionDao.getAnswerInQuestion(qid, "1", hhzToken);
+        Question question = questionService.getQuestion(qid);
+        RelativeMultiAnswer relativeMultiAnswer = questionService.getAnswerInQuestion(qid, "1");
         map.addAttribute("question", question);
         map.addAttribute("answers", relativeMultiAnswer);
         return "question";
@@ -130,16 +85,10 @@ public class QuestionController {
 
     @RequestMapping("/ajax/question/{qid}/answer")
     public String getQuestion(
-            HttpServletRequest request,
             ModelMap map,
             @PathVariable String qid,
             @RequestParam(value = "paged") String page){
-        Cookie[] cookies = request.getCookies();
-        String hhzToken = CookieUtil.getHhzToken(cookies);
-        if (hhzToken == null){
-            return null;
-        }
-        RelativeMultiAnswer relativeMultiAnswer = questionDao.getAnswerInQuestion(qid, page, hhzToken);
+        RelativeMultiAnswer relativeMultiAnswer = questionService.getAnswerInQuestion(qid, page);
         map.addAttribute("answers", relativeMultiAnswer);
         return "question :: answerList";
     }
